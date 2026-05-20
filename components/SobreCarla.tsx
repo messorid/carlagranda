@@ -22,7 +22,7 @@ export default function SobreCarla() {
               aria-hidden="true"
             />
             <Image
-              src="/carla.jpg"
+              src="/images/carlaperfil.png"
               alt="Carla Granda"
               width={480}
               height={580}
