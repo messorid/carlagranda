@@ -34,12 +34,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_US",
     siteName: "Carla Granda",
+    images: [
+      {
+        url: "/images/carlaperfil.png",
+        width: 1200,
+        height: 630,
+        alt: "Carla Granda",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Carla Granda | Abogados para víctimas de accidentes",
     description:
       "¿Tuviste un accidente? Sin costo inicial — te conectamos con el abogado correcto.",
+    images: ["/images/carlaperfil.png"],
   },
   robots: {
     index: true,
