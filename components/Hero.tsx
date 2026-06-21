@@ -14,7 +14,6 @@ export default function Hero() {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        poster="/images/fondo.png"
         aria-hidden="true"
       >
         <source src="/images/video169.mp4" type="video/mp4" />
@@ -64,7 +63,7 @@ export default function Hero() {
             Cuéntanos tu caso
           </a>
           <a
-            href="https://wa.me/16892361508"
+            href="https://wa.me/14074608151"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-4 rounded-full border border-gold/45 text-gold font-sans text-sm font-medium hover:bg-gold/10 transition-colors duration-200 cursor-pointer"

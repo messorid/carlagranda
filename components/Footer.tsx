@@ -30,7 +30,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="font-sans text-xs text-gold hover:text-gold-light transition-colors duration-200"
               >
-                +1 (689) 236-1508
+                +1 (407) 460-8151
               </a>
               <a
                 href={`mailto:${CORREO_CONTACTO}`}
