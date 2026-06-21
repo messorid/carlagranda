@@ -2,19 +2,22 @@ import { MessageCircle, UserCheck, ShieldCheck } from "lucide-react";
 
 const pasos = [
   {
-    icono: MessageCircle,
+    numero: "01",
+    Icono:  MessageCircle,
     titulo: "Cuéntanos tu caso",
     descripcion:
       "Nos contactas y nos explicas qué pasó. Sin formularios complicados, sin jerga legal — solo cuéntanos tu historia.",
   },
   {
-    icono: UserCheck,
+    numero: "02",
+    Icono:  UserCheck,
     titulo: "Te conectamos con un abogado",
     descripcion:
-      "Te vinculamos con un abogado especializado en tu tipo de accidente, listo para revisar tu situación.",
+      "Te vinculamos con un abogado especializado en tu tipo de accidente, listo para revisar tu situación sin costo inicial.",
   },
   {
-    icono: ShieldCheck,
+    numero: "03",
+    Icono:  ShieldCheck,
     titulo: "Recibes tu indemnización",
     descripcion:
       "El abogado lleva tu caso y tú recibes la compensación que mereces, sin pagar nada por adelantado.",
@@ -23,71 +26,61 @@ const pasos = [
 
 export default function ComoFunciona() {
   return (
-    <section id="como-funciona" className="bg-cream py-24 sm:py-32 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="como-funciona" className="bg-bg py-28 sm:py-40 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
 
-        {/* Encabezado */}
-        <div className="text-center mb-16 sm:mb-20">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-10 bg-gold" />
-            <div className="w-2 h-2 bg-gold rotate-45 shrink-0" aria-hidden="true" />
-            <div className="h-px w-10 bg-gold" />
-          </div>
-          <p className="font-sans text-xs tracking-[0.2em] uppercase text-brown-mid mb-4">
+        {/* Header */}
+        <div className="text-center mb-20 sm:mb-28">
+          <p className="font-sans text-xs tracking-[0.22em] uppercase text-gold mb-5">
             El proceso
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-brown leading-tight">
-            Tres pasos hacia tu indemnización
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-text leading-tight">
+            Tres pasos hacia tu
+            <br />
+            <em className="text-gold">indemnización</em>
           </h2>
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
+        {/* ──────────────────────────────────────────────────────────────────
+            Mobile: horizontal snap carousel (flex + overflow-x)
+            md+:    3-column grid
+        ────────────────────────────────────────────────────────────────── */}
+        <div className="carousel-track flex md:grid md:grid-cols-3 gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0 pb-4 md:pb-0">
+          {pasos.map(({ numero, Icono, titulo, descripcion }) => (
+            <div
+              key={titulo}
+              className="snap-start shrink-0 w-[82vw] sm:w-[55vw] md:w-auto group"
+            >
+              <div className="h-full bg-card border border-border rounded-3xl p-8 sm:p-10 hover:border-gold/35 transition-colors duration-300">
 
-          {/* Línea conectora — horizontal en desktop */}
-          <div
-            className="hidden md:block absolute top-8 left-[16.67%] right-[16.67%] h-px bg-gradient-to-r from-gold/10 via-gold/50 to-gold/10"
-            aria-hidden="true"
-          />
-
-          {/* Línea conectora — vertical en mobile */}
-          <div
-            className="md:hidden absolute top-8 bottom-8 w-px bg-gradient-to-b from-gold/50 via-gold/40 to-gold/10"
-            style={{ left: "31.5px" }}
-            aria-hidden="true"
-          />
-
-          {/* Pasos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 relative">
-            {pasos.map(({ icono: Icono, titulo, descripcion }) => (
-              <div
-                key={titulo}
-                className="flex md:flex-col items-start md:items-center gap-5 md:gap-0 group"
-              >
-                {/* Nodo con ícono */}
-                <div className="relative z-10 w-16 h-16 rounded-full bg-surface border border-gold flex items-center justify-center shrink-0 md:mb-7 shadow-[0_2px_12px_rgba(201,169,97,0.18)] transition-transform duration-300 group-hover:scale-105">
-                  {/* Punto exterior decorativo en hover */}
+                {/* Step number + icon row */}
+                <div className="flex items-center gap-4 mb-7">
                   <span
-                    className="absolute inset-0 rounded-full border border-gold/0 group-hover:border-gold/40 transition-colors duration-300 scale-110"
+                    className="font-display text-[56px] leading-none text-gold/18 select-none"
                     aria-hidden="true"
-                  />
-                  <Icono className="text-gold relative" size={26} strokeWidth={1.5} />
+                  >
+                    {numero}
+                  </span>
+                  <div className="w-12 h-12 rounded-2xl bg-gold/8 border border-gold/20 flex items-center justify-center shrink-0 group-hover:bg-gold/14 transition-colors duration-300">
+                    <Icono size={22} className="text-gold" strokeWidth={1.5} />
+                  </div>
                 </div>
 
-                {/* Texto */}
-                <div className="md:text-center md:max-w-xs flex-1">
-                  <h3 className="font-display text-xl text-brown leading-snug mb-2 md:mb-3">
-                    {titulo}
-                  </h3>
-                  <p className="font-sans text-sm leading-relaxed text-text-muted">
-                    {descripcion}
-                  </p>
-                </div>
+                <h3 className="font-display text-xl sm:text-2xl text-text leading-snug mb-3">
+                  {titulo}
+                </h3>
+                <p className="font-sans text-sm leading-relaxed text-text-muted">
+                  {descripcion}
+                </p>
               </div>
-            ))}
-          </div>
-
+            </div>
+          ))}
         </div>
+
+        {/* Mobile swipe hint */}
+        <p className="md:hidden text-center font-sans text-xs text-text-muted/40 mt-5 tracking-wide">
+          ← Desliza para ver los pasos →
+        </p>
 
       </div>
     </section>

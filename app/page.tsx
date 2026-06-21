@@ -12,8 +12,7 @@ export default function Home() {
     <>
       <Header />
 
-      {/* pt-16 compensa la altura del header fijo */}
-      <main className="pt-16">
+      <main>
         {/* Hero visible de inmediato, sin animación de entrada */}
         <Hero />
 

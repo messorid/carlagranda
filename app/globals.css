@@ -1,18 +1,62 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colores principales */
-  --color-cream: #FAF7F2;
-  --color-surface: #FFFFFF;
-  --color-brown: #3D2B1F;
-  --color-brown-mid: #6B4F3A;
-  --color-gold: #C9A961;
-  --color-gold-light: #E0C988;
-  --color-text-muted: #6B5B52;
+  /* ── Dark background scale ── */
+  --color-bg:      #09090F;
+  --color-surface: #111118;
+  --color-card:    #18181F;
+  --color-border:  #26263A;
 
-  /* Fuentes */
-  --font-sans: var(--font-inter);
+  /* ── Brand gold ── */
+  --color-gold:       #C9A961;
+  --color-gold-light: #E0C988;
+
+  /* ── Text ── */
+  --color-text:       #F8FAFC;
+  --color-text-muted: #94A3B8;
+
+  /* ── Legacy aliases (keep for any untouched files) ── */
+  --color-cream:      #09090F;
+  --color-brown:      #F8FAFC;
+  --color-brown-mid:  #C9A961;
+
+  /* ── Fonts ── */
+  --font-sans:    var(--font-inter);
   --font-display: var(--font-playfair);
+}
+
+/* ──────────────────────────────────────────────────
+   Pulsing gold glow — applied to the "30" in Hero
+────────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 16px rgba(201,169,97,.55),
+      0 0 32px rgba(201,169,97,.25);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow:
+      0 0 24px rgba(201,169,97,1),
+      0 0 56px rgba(201,169,97,.65),
+      0 0 96px rgba(201,169,97,.30);
+    transform: scale(1.07);
+  }
+}
+
+.pulse-glow {
+  display: inline-block;
+  color: #C9A961;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scroll-snap carousel — hide native scrollbar */
+.carousel-track {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
 }
 
 html {
@@ -20,7 +64,7 @@ html {
 }
 
 body {
-  background-color: #FAF7F2;
-  color: #3D2B1F;
+  background-color: #09090F;
+  color: #F8FAFC;
   font-family: var(--font-inter), sans-serif;
 }

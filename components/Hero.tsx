@@ -1,121 +1,87 @@
-import Image from "next/image";
-
 export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen bg-cream flex items-center px-6 py-24 sm:py-28 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Fondo decorativo con opacidad baja */}
-      <Image
-        src="/images/fondo.png"
-        alt=""
-        fill
-        className="object-cover object-center opacity-15 select-none pointer-events-none"
-        priority
+      {/* ── Video background ─────────────────────────────────────────────
+          Coloca el archivo del video en /public/videos/accidente.mp4
+          y descomenta la etiqueta <source> de abajo.
+      ─────────────────────────────────────────────────────────────────── */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        poster="/images/fondo.png"
+        aria-hidden="true"
+      >
+        <source src="/images/video169.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlays */}
+      <div className="absolute inset-0 bg-black/82" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-bg/85"
         aria-hidden="true"
       />
-      {/* Capa de tinte crema para mantener legibilidad */}
-      <div className="absolute inset-0 bg-cream/65" aria-hidden="true" />
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-28 pb-28 flex flex-col items-center text-center">
 
-          {/* ── Columna de texto ── */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+        {/* Headline */}
+        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[90px] leading-[1.08] text-white max-w-4xl mb-8">
+          ¿Tuviste un accidente
+          <br />
+          en los últimos{" "}
+          <span className="pulse-glow">30</span>{" "}días?
+        </h1>
 
-            {/* Foto circular — solo visible en mobile */}
-            <div className="lg:hidden mb-8 relative">
-              <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-gold/50 shadow-sm">
-                <Image
-                  src="/images/carlaperfil.png"
-                  alt="Carla Granda"
-                  width={112}
-                  height={112}
-                  className="w-full h-full object-cover object-top"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Ornamento dorado */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px w-10 bg-gold" />
-              <div className="w-2 h-2 bg-gold rotate-45 shrink-0" aria-hidden="true" />
-              <div className="h-px w-10 bg-gold" />
-            </div>
-
-            {/* Etiqueta */}
-            <p className="font-sans text-xs tracking-[0.2em] uppercase text-brown-mid mb-5">
-              Víctimas de accidentes
-            </p>
-
-            {/*
-              Variante 1 (urgencia + empatía):
-                "¿Tuviste un accidente en los últimos 30 días?"
-              Variante 2 (centrada en la víctima):
-                "Eres víctima. Mereces una buena indemnización."
-              Variante 3 (acción inmediata):
-                "El momento de actuar es ahora."
-            */}
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.15] text-brown mb-6">
-              ¿Tuviste un accidente
-              <br />
-              <em>en los últimos 30 días?</em>
-            </h1>
-
-            {/* Línea decorativa */}
-            <div className="w-12 h-px bg-gold mb-8" aria-hidden="true" />
-
-            {/* Subtítulo */}
-            <p className="font-sans text-lg sm:text-xl leading-relaxed text-text-muted max-w-xl mb-10">
-              Si eres víctima de un accidente, puedo ayudarte a obtener
-              la indemnización que mereces —{" "}
-              <span className="text-brown-mid font-medium">sin costo alguno.</span>
-            </p>
-
-            {/* Botones CTA */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full sm:w-auto mb-10">
-              <a
-                href="#contacto"
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-brown-mid text-white font-sans text-base font-medium transition-colors duration-200 hover:bg-brown"
-              >
-                Cuéntanos tu caso
-              </a>
-              <a
-                href="https://wa.me/16892361508"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 rounded-full border border-gold text-brown-mid font-sans text-base font-medium transition-colors duration-200 hover:bg-gold-light hover:border-gold-light"
-              >
-                Hablar por WhatsApp
-              </a>
-            </div>
-
-            {/* Nota de confianza */}
-            <p className="font-sans text-sm text-text-muted tracking-wide">
-              Sin compromiso&ensp;·&ensp;Consulta gratuita&ensp;·&ensp;Confidencial
-            </p>
-          </div>
-
-          {/* ── Columna de imagen (solo desktop) ── */}
-          <div className="hidden lg:block relative max-w-sm mx-auto w-full">
-            {/* Cuadro dorado offset */}
-            <div
-              className="absolute inset-0 translate-x-5 translate-y-5 border border-gold/45 rounded-2xl"
-              aria-hidden="true"
-            />
-            <Image
-              src="/images/carlaperfil.png"
-              alt="Carla Granda"
-              width={480}
-              height={580}
-              className="relative z-10 w-full rounded-2xl object-cover object-top shadow-sm"
-              priority
-            />
-          </div>
-
+        {/* Gold divider */}
+        <div className="flex items-center gap-4 mb-8 w-full max-w-xs">
+          <div className="flex-1 h-px bg-gold/40" />
+          <div
+            className="w-1.5 h-1.5 bg-gold rotate-45 shrink-0"
+            aria-hidden="true"
+          />
+          <div className="flex-1 h-px bg-gold/40" />
         </div>
+
+        {/* Subtitle */}
+        <p className="font-sans text-sm sm:text-base leading-relaxed text-white/60 max-w-lg mb-12">
+          Si eres víctima de un accidente, puedo ayudarte a obtener la
+          indemnización que mereces —{" "}
+          <span className="text-gold font-medium">sin costo alguno para ti.</span>
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-14">
+          <a
+            href="#contacto"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-gold text-bg font-sans text-sm font-semibold hover:bg-gold-light transition-colors duration-200 cursor-pointer"
+          >
+            Cuéntanos tu caso
+          </a>
+          <a
+            href="https://wa.me/16892361508"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-8 py-4 rounded-full border border-gold/45 text-gold font-sans text-sm font-medium hover:bg-gold/10 transition-colors duration-200 cursor-pointer"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+
+      </div>
+
+      {/* Scroll cue */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-35"
+        aria-hidden="true"
+      >
+        <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-white">Scroll</span>
+        <div className="w-px h-9 bg-gradient-to-b from-white to-transparent" />
       </div>
     </section>
   );
