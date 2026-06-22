@@ -1,3 +1,7 @@
+const WA_MSG = encodeURIComponent(
+  "Hola, me comunico desde carlaccidentes.com. Quisiera información sobre mi caso."
+);
+
 export default function Hero() {
   return (
     <section
@@ -63,7 +67,7 @@ export default function Hero() {
             Cuéntanos tu caso
           </a>
           <a
-            href="https://wa.me/14074608151"
+            href={`https://wa.me/14074608151?text=${WA_MSG}`}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-4 rounded-full border border-gold/45 text-gold font-sans text-sm font-medium hover:bg-gold/10 transition-colors duration-200 cursor-pointer"

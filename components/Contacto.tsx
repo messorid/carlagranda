@@ -1,32 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, CheckCircle, Loader2 } from "lucide-react";
 import { NUMERO_WHATSAPP } from "@/lib/config";
 
 const TIPOS_ACCIDENTE = [
   "Accidente de auto",
-  "Accidente de trabajo",
+  "Accidente laboral",
+  "Mordida de perro o animales",
   "Resbalón y caída",
-  "Accidente de motocicleta",
-  "Accidente de peatón",
-  "Negligencia médica",
   "Otro",
 ];
 
+const WA_MSG = encodeURIComponent(
+  "Hola, me comunico desde carlaccidentes.com. Quisiera información sobre mi caso."
+);
+
 interface Errores {
-  nombre?:       string;
-  telefono?:     string;
-  tipoAccidente?:string;
-  descripcion?:  string;
+  nombre?:        string;
+  telefono?:      string;
+  tipoAccidente?: string;
+  descripcion?:   string;
 }
 
 export default function Contacto() {
-  const [nombre,         setNombre]         = useState("");
-  const [telefono,       setTelefono]       = useState("");
-  const [tipoAccidente,  setTipoAccidente]  = useState("");
-  const [descripcion,    setDescripcion]    = useState("");
-  const [errores,        setErrores]        = useState<Errores>({});
+  const [nombre,        setNombre]        = useState("");
+  const [telefono,      setTelefono]      = useState("");
+  const [tipoAccidente, setTipoAccidente] = useState("");
+  const [descripcion,   setDescripcion]   = useState("");
+  const [errores,       setErrores]       = useState<Errores>({});
+  const [enviando,      setEnviando]      = useState(false);
+  const [exito,         setExito]         = useState(false);
+  const [errorEnvio,    setErrorEnvio]    = useState("");
 
   function validar(): boolean {
     const e: Errores = {};
@@ -42,21 +47,29 @@ export default function Contacto() {
     return Object.keys(e).length === 0;
   }
 
-  function handleSubmit(ev: React.FormEvent) {
+  async function handleSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     if (!validar()) return;
 
-    const msg =
-      `Hola, me llamo ${nombre.trim()}. ` +
-      `Mi número es ${telefono.trim()}. ` +
-      `Tuve un accidente: ${tipoAccidente}.\n\n` +
-      descripcion.trim();
+    setEnviando(true);
+    setErrorEnvio("");
 
-    window.open(
-      `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msg)}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
+    try {
+      const res = await fetch("/api/contacto", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ nombre, telefono, tipoAccidente, descripcion }),
+      });
+
+      if (!res.ok) throw new Error();
+
+      setExito(true);
+      setNombre(""); setTelefono(""); setTipoAccidente(""); setDescripcion("");
+    } catch {
+      setErrorEnvio("Hubo un error al enviar. Por favor intenta por WhatsApp.");
+    } finally {
+      setEnviando(false);
+    }
   }
 
   const base =
@@ -81,7 +94,7 @@ export default function Contacto() {
 
         {/* WhatsApp CTA */}
         <a
-          href={`https://wa.me/${NUMERO_WHATSAPP}`}
+          href={`https://wa.me/${NUMERO_WHATSAPP}?text=${WA_MSG}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#25D366] text-white font-sans text-sm font-semibold hover:bg-[#1fba5b] transition-colors duration-200 mb-10 cursor-pointer"
@@ -99,94 +112,117 @@ export default function Contacto() {
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        {/* Form card */}
-        <div className="bg-card border border-border rounded-3xl p-8">
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-
-            {/* Nombre */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="nombre" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
-                Nombre completo
-              </label>
-              <input
-                id="nombre"
-                type="text"
-                placeholder="Tu nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                className={`${base} ${errores.nombre ? "border-red-500/60" : "border-border"}`}
-              />
-              {errores.nombre && (
-                <p className="font-sans text-xs text-red-400">{errores.nombre}</p>
-              )}
-            </div>
-
-            {/* Teléfono */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="telefono" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
-                Teléfono
-              </label>
-              <input
-                id="telefono"
-                type="tel"
-                placeholder="+1 (000) 000-0000"
-                value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
-                className={`${base} ${errores.telefono ? "border-red-500/60" : "border-border"}`}
-              />
-              {errores.telefono && (
-                <p className="font-sans text-xs text-red-400">{errores.telefono}</p>
-              )}
-            </div>
-
-            {/* Tipo de accidente */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="tipo" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
-                Tipo de accidente
-              </label>
-              <select
-                id="tipo"
-                value={tipoAccidente}
-                onChange={(e) => setTipoAccidente(e.target.value)}
-                className={`${base} ${errores.tipoAccidente ? "border-red-500/60" : "border-border"}`}
-              >
-                <option value="">Selecciona una opción</option>
-                {TIPOS_ACCIDENTE.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
-              </select>
-              {errores.tipoAccidente && (
-                <p className="font-sans text-xs text-red-400">{errores.tipoAccidente}</p>
-              )}
-            </div>
-
-            {/* Descripción */}
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="descripcion" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
-                Cuéntanos qué pasó
-              </label>
-              <textarea
-                id="descripcion"
-                rows={4}
-                placeholder="Describe brevemente el accidente y cuándo ocurrió..."
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                className={`${base} resize-none ${errores.descripcion ? "border-red-500/60" : "border-border"}`}
-              />
-              {errores.descripcion && (
-                <p className="font-sans text-xs text-red-400">{errores.descripcion}</p>
-              )}
-            </div>
-
+        {/* Success state */}
+        {exito ? (
+          <div className="bg-card border border-gold/30 rounded-3xl p-10 flex flex-col items-center text-center gap-4">
+            <CheckCircle size={48} className="text-gold" strokeWidth={1.5} />
+            <h3 className="font-display text-2xl text-text">¡Mensaje enviado!</h3>
+            <p className="font-sans text-sm text-text-muted leading-relaxed max-w-sm">
+              Carla revisará tu caso y se pondrá en contacto contigo a la brevedad.
+            </p>
             <button
-              type="submit"
-              className="mt-2 w-full py-4 rounded-full bg-gold text-bg font-sans text-sm font-semibold hover:bg-gold-light transition-colors duration-200 cursor-pointer"
+              onClick={() => setExito(false)}
+              className="mt-2 px-6 py-3 rounded-full border border-gold/40 text-gold font-sans text-xs hover:bg-gold/8 transition-colors cursor-pointer"
             >
-              Enviar por WhatsApp
+              Enviar otro mensaje
             </button>
+          </div>
+        ) : (
+          /* Form card */
+          <div className="bg-card border border-border rounded-3xl p-8">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
 
-          </form>
-        </div>
+              {/* Nombre */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="nombre" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
+                  Nombre completo
+                </label>
+                <input
+                  id="nombre"
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  className={`${base} ${errores.nombre ? "border-red-500/60" : "border-border"}`}
+                />
+                {errores.nombre && (
+                  <p className="font-sans text-xs text-red-400">{errores.nombre}</p>
+                )}
+              </div>
+
+              {/* Teléfono */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="telefono" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
+                  Teléfono
+                </label>
+                <input
+                  id="telefono"
+                  type="tel"
+                  placeholder="+1 (000) 000-0000"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
+                  className={`${base} ${errores.telefono ? "border-red-500/60" : "border-border"}`}
+                />
+                {errores.telefono && (
+                  <p className="font-sans text-xs text-red-400">{errores.telefono}</p>
+                )}
+              </div>
+
+              {/* Tipo de accidente */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="tipo" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
+                  Tipo de accidente
+                </label>
+                <select
+                  id="tipo"
+                  value={tipoAccidente}
+                  onChange={(e) => setTipoAccidente(e.target.value)}
+                  className={`${base} ${errores.tipoAccidente ? "border-red-500/60" : "border-border"}`}
+                >
+                  <option value="">Selecciona una opción</option>
+                  {TIPOS_ACCIDENTE.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+                {errores.tipoAccidente && (
+                  <p className="font-sans text-xs text-red-400">{errores.tipoAccidente}</p>
+                )}
+              </div>
+
+              {/* Descripción */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="descripcion" className="font-sans text-xs font-medium text-text-muted uppercase tracking-wide">
+                  Cuéntanos qué pasó
+                </label>
+                <textarea
+                  id="descripcion"
+                  rows={4}
+                  placeholder="Describe brevemente el accidente y cuándo ocurrió..."
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  className={`${base} resize-none ${errores.descripcion ? "border-red-500/60" : "border-border"}`}
+                />
+                {errores.descripcion && (
+                  <p className="font-sans text-xs text-red-400">{errores.descripcion}</p>
+                )}
+              </div>
+
+              {errorEnvio && (
+                <p className="font-sans text-xs text-red-400 text-center">{errorEnvio}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={enviando}
+                className="mt-2 w-full py-4 rounded-full bg-gold text-bg font-sans text-sm font-semibold hover:bg-gold-light transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {enviando && <Loader2 size={16} className="animate-spin" />}
+                {enviando ? "Enviando..." : "Enviar mensaje"}
+              </button>
+
+            </form>
+          </div>
+        )}
 
       </div>
     </section>

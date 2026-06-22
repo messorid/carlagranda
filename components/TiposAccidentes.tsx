@@ -1,42 +1,25 @@
-import {
-  Car,
-  HardHat,
-  AlertTriangle,
-  Bike,
-  User,
-  Stethoscope,
-} from "lucide-react";
+import { Car, HardHat, AlertTriangle, PawPrint } from "lucide-react";
 
 const tipos = [
   {
     Icono: Car,
-    label: "Accidentes de auto",
+    label: "Accidente de auto",
     desc:  "Colisiones, atropellos y accidentes con vehículos de motor.",
   },
   {
     Icono: HardHat,
-    label: "Accidentes de trabajo",
+    label: "Accidente laboral",
     desc:  "Lesiones ocurridas en el lugar de trabajo o en camino a él.",
   },
   {
+    Icono: PawPrint,
+    label: "Mordida de perro o animales",
+    desc:  "Ataques y lesiones causadas por animales en propiedad ajena.",
+  },
+  {
     Icono: AlertTriangle,
-    label: "Resbalones y caídas",
+    label: "Resbalón y caída",
     desc:  "Caídas en propiedades privadas, comercios o espacios públicos.",
-  },
-  {
-    Icono: Bike,
-    label: "Accidentes de motocicleta",
-    desc:  "Colisiones y accidentes en moto, con o sin otro vehículo.",
-  },
-  {
-    Icono: User,
-    label: "Accidentes de peatón",
-    desc:  "Atropellos y lesiones sufridas caminando en la vía pública.",
-  },
-  {
-    Icono: Stethoscope,
-    label: "Negligencia médica",
-    desc:  "Errores médicos, diagnósticos incorrectos y mala praxis.",
   },
 ];
 
@@ -63,7 +46,7 @@ export default function TiposAccidentes() {
             Mobile: horizontal snap carousel
             md+:    3 × 2 grid
         ────────────────────────────────────────────────────────────────── */}
-        <div className="carousel-track flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0 pb-4 md:pb-0">
+        <div className="carousel-track flex md:grid md:grid-cols-2 gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-6 px-6 md:mx-0 md:px-0 pb-4 md:pb-0">
           {tipos.map(({ Icono, label, desc }) => (
             <div
               key={label}

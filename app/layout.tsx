@@ -14,42 +14,44 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Carla Granda | Conectamos víctimas de accidentes con abogados especializados",
+  title: "Carlaccidentes | Conectamos víctimas de accidentes con abogados especializados",
   description:
     "¿Tuviste un accidente? Te conectamos con abogados especializados en accidentes para que recibas la indemnización que mereces. Sin costo inicial para ti.",
   keywords: [
     "accidente de auto",
-    "accidente de trabajo",
+    "accidente laboral",
     "indemnización por accidente",
     "abogado de accidentes",
-    "negligencia médica",
-    "accidente de motocicleta",
+    "mordida de perro",
     "resbalón y caída",
+    "Carlaccidentes",
     "Carla Granda",
   ],
   openGraph: {
-    title: "Carla Granda | Conectamos víctimas de accidentes con abogados especializados",
+    title: "Carlaccidentes | Conectamos víctimas de accidentes con abogados especializados",
     description:
       "¿Tuviste un accidente? Te conectamos con abogados especializados. Sin costo inicial para ti.",
     type: "website",
     locale: "es_US",
-    siteName: "Carla Granda",
+    siteName: "Carlaccidentes",
+    url: "https://www.carlaccidentes.com",
     images: [
       {
         url: "/images/carlaperfil.png",
         width: 1200,
         height: 630,
-        alt: "Carla Granda",
+        alt: "Carlaccidentes — Carla Granda",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Carla Granda | Abogados para víctimas de accidentes",
+    title: "Carlaccidentes | Abogados para víctimas de accidentes",
     description:
       "¿Tuviste un accidente? Sin costo inicial — te conectamos con el abogado correcto.",
     images: ["/images/carlaperfil.png"],
   },
+  metadataBase: new URL("https://www.carlaccidentes.com"),
   robots: {
     index: true,
     follow: true,

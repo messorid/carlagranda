@@ -18,7 +18,7 @@ export default function Footer() {
 
           {/* Brand + contact */}
           <div>
-            <p className="font-display text-2xl text-text mb-3">Carla Granda</p>
+            <p className="font-display text-2xl text-text mb-3">Carlaccidentes</p>
             <p className="font-sans text-xs leading-relaxed text-text-muted max-w-xs mb-7">
               Conectamos a personas que sufrieron accidentes con abogados
               especializados para que reciban la indemnización que merecen.
@@ -66,14 +66,14 @@ export default function Footer() {
         {/* Legal disclaimer */}
         <p className="font-sans text-xs leading-relaxed text-text-muted/55 max-w-2xl mb-5">
           <span className="font-medium text-text-muted/70">Aviso legal:</span>{" "}
-          Carla Granda no es un bufete de abogados ni ofrece asesoría legal.
+          Carlaccidentes no es un bufete de abogados ni ofrece asesoría legal.
           Este servicio conecta a las personas con abogados independientes.
           Los resultados varían según cada caso.
         </p>
 
         {/* Copyright */}
         <p className="font-sans text-xs text-text-muted/30">
-          © {new Date().getFullYear()} Carla Granda. Todos los derechos reservados.
+          © {new Date().getFullYear()} Carlaccidentes. Todos los derechos reservados.
         </p>
 
       </div>

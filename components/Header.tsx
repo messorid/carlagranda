@@ -37,7 +37,7 @@ export default function Header() {
           href="#inicio"
           className="font-display text-lg text-text hover:text-gold transition-colors duration-200"
         >
-          Carla Granda
+          Carlaccidentes
         </a>
 
         {/* Desktop nav */}

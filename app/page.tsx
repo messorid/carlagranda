@@ -6,6 +6,7 @@ import SobreCarla      from "@/components/SobreCarla";
 import Contacto        from "@/components/Contacto";
 import Footer          from "@/components/Footer";
 import FadeIn          from "@/components/FadeIn";
+import WhatsAppFloat   from "@/components/WhatsAppFloat";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <WhatsAppFloat />
     </>
   );
 }
