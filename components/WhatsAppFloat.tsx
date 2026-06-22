@@ -1,7 +1,10 @@
+"use client";
+
 import { NUMERO_WHATSAPP } from "@/lib/config";
+import { track } from "@/lib/gtag";
 
 const WA_MSG = encodeURIComponent(
-  "Hola, me comunico desde carlaccidentes.com. Quisiera información sobre mi caso."
+  "Hola, me comunico desde carlaccidentes.com. Quisiera darte información sobre mi caso."
 );
 
 export default function WhatsAppFloat() {
@@ -11,6 +14,7 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
+      onClick={() => track.whatsapp("floating_button")}
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] shadow-lg hover:bg-[#1fba5b] hover:scale-105 transition-all duration-200 cursor-pointer group"
     >
       {/* Pulse ring */}

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { CheckCircle } from "lucide-react";
+import { track } from "@/lib/gtag";
 
 const valores = [
   "Atención personalizada",
@@ -108,6 +111,7 @@ export default function SobreCarla() {
             <div className="pt-2">
               <a
                 href="#contacto"
+                onClick={() => track.ctaClick("sobre_carla_hablar")}
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gold text-bg font-sans text-sm font-semibold hover:bg-gold-light transition-colors duration-200 cursor-pointer"
               >
                 Hablar con Carla

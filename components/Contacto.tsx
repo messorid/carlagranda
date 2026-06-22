@@ -3,17 +3,17 @@
 import { useState } from "react";
 import { MessageCircle, CheckCircle, Loader2 } from "lucide-react";
 import { NUMERO_WHATSAPP } from "@/lib/config";
+import { track } from "@/lib/gtag";
 
 const TIPOS_ACCIDENTE = [
   "Accidente de auto",
   "Accidente laboral",
   "Mordida de perro o animales",
   "Resbalón y caída",
-  "Otro",
 ];
 
 const WA_MSG = encodeURIComponent(
-  "Hola, me comunico desde carlaccidentes.com. Quisiera información sobre mi caso."
+  "Hola, me comunico desde carlaccidentes.com. Quisiera darte información sobre mi caso."
 );
 
 interface Errores {
@@ -51,6 +51,7 @@ export default function Contacto() {
     ev.preventDefault();
     if (!validar()) return;
 
+    track.formSubmit();
     setEnviando(true);
     setErrorEnvio("");
 
@@ -63,6 +64,7 @@ export default function Contacto() {
 
       if (!res.ok) throw new Error();
 
+      track.formSuccess();
       setExito(true);
       setNombre(""); setTelefono(""); setTipoAccidente(""); setDescripcion("");
     } catch {
@@ -97,6 +99,7 @@ export default function Contacto() {
           href={`https://wa.me/${NUMERO_WHATSAPP}?text=${WA_MSG}`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track.whatsapp("contacto")}
           className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-[#25D366] text-white font-sans text-sm font-semibold hover:bg-[#1fba5b] transition-colors duration-200 mb-10 cursor-pointer"
         >
           <MessageCircle size={20} strokeWidth={1.5} />

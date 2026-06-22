@@ -1,5 +1,9 @@
+"use client";
+
+import { track } from "@/lib/gtag";
+
 const WA_MSG = encodeURIComponent(
-  "Hola, me comunico desde carlaccidentes.com. Quisiera información sobre mi caso."
+  "Hola, me comunico desde carlaccidentes.com. Quisiera darte información sobre mi caso."
 );
 
 export default function Hero() {
@@ -62,6 +66,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-14">
           <a
             href="#contacto"
+            onClick={() => track.ctaClick("hero_cuentanos")}
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-gold text-bg font-sans text-sm font-semibold hover:bg-gold-light transition-colors duration-200 cursor-pointer"
           >
             Cuéntanos tu caso
@@ -70,6 +75,7 @@ export default function Hero() {
             href={`https://wa.me/14074608151?text=${WA_MSG}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track.whatsapp("hero")}
             className="w-full sm:w-auto px-8 py-4 rounded-full border border-gold/45 text-gold font-sans text-sm font-medium hover:bg-gold/10 transition-colors duration-200 cursor-pointer"
           >
             Hablar por WhatsApp
