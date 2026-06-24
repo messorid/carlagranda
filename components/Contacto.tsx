@@ -51,7 +51,15 @@ export default function Contacto() {
     ev.preventDefault();
     if (!validar()) return;
 
+    // Genera un ID único para deduplicar Pixel ↔ CAPI en Meta
+    const eventId = `lead-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+
     track.formSubmit();
+    // Dispara Lead en el Pixel del browser con el mismo eventId
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "Lead", {}, { eventID: eventId });
+    }
+
     setEnviando(true);
     setErrorEnvio("");
 
@@ -59,7 +67,7 @@ export default function Contacto() {
       const res = await fetch("/api/contacto", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ nombre, telefono, tipoAccidente, descripcion }),
+        body:    JSON.stringify({ nombre, telefono, tipoAccidente, descripcion, eventId }),
       });
 
       if (!res.ok) throw new Error();

@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { sendCAPIEvent } from "@/lib/capi";
 
 export async function POST(req: NextRequest) {
-  const { nombre, telefono, tipoAccidente, descripcion } = await req.json();
+  const { nombre, telefono, tipoAccidente, descripcion, eventId } = await req.json();
 
   if (!nombre || !telefono || !tipoAccidente || !descripcion) {
     return NextResponse.json({ error: "Faltan campos." }, { status: 400 });
   }
 
+  // ── Email ──────────────────────────────────────────────────────────────────
   const transporter = nodemailer.createTransport({
     host:   process.env.SMTP_HOST,
     port:   Number(process.env.SMTP_PORT) || 587,
@@ -39,6 +41,21 @@ export async function POST(req: NextRequest) {
       </div>
     `,
   });
+
+  // ── Meta CAPI — se ejecuta en paralelo tras el email ──────────────────────
+  const ip        = req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? undefined;
+  const userAgent = req.headers.get("user-agent") ?? undefined;
+
+  sendCAPIEvent({
+    eventName:  "Lead",
+    eventId:    eventId ?? `form-${Date.now()}`,
+    sourceUrl:  "https://www.carlaccidentes.com/#contacto",
+    phone:      telefono,
+    nombre,
+    ip,
+    userAgent,
+    customData: { tipo_accidente: tipoAccidente },
+  }); // sin await — no bloquea la respuesta
 
   return NextResponse.json({ ok: true });
 }
