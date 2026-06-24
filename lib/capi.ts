@@ -72,12 +72,12 @@ export async function sendCAPIEvent({
     console.log("CAPI: intentando enviar evento", eventId);
 
     const response = await fetch(
-      `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${token}`,
+      `https://graph.facebook.com/v19.0/937812359271260/events?access_token=${process.env.META_CAPI_TOKEN}`,
       { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) },
     );
 
     const result = await response.json();
-    console.log("CAPI: respuesta de Meta", result);
+    console.log("CAPI: respuesta de Meta", JSON.stringify(result));
   } catch (err) {
     console.error("CAPI: error al enviar", err);
   }
