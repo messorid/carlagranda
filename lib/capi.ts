@@ -51,7 +51,7 @@ export async function sendCAPIEvent({
   if (ip)        userData.client_ip_address = ip;
   if (userAgent) userData.client_user_agent = userAgent;
 
-  const body = {
+  const body: Record<string, unknown> = {
     data: [{
       event_name:       eventName,
       event_time:       Math.floor(Date.now() / 1000),
@@ -62,6 +62,11 @@ export async function sendCAPIEvent({
       ...(customData ? { custom_data: customData } : {}),
     }],
   };
+
+  // Solo durante pruebas — elimina META_TEST_EVENT_CODE del .env cuando vayas a producción
+  if (process.env.META_TEST_EVENT_CODE) {
+    body.test_event_code = process.env.META_TEST_EVENT_CODE;
+  }
 
   try {
     await fetch(
