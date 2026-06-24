@@ -7,6 +7,7 @@ import Contacto        from "@/components/Contacto";
 import Footer          from "@/components/Footer";
 import FadeIn          from "@/components/FadeIn";
 import WhatsAppFloat   from "@/components/WhatsAppFloat";
+import CallFloat       from "@/components/CallFloat";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <CallFloat />
       <WhatsAppFloat />
     </>
   );
